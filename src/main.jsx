@@ -10,6 +10,7 @@ import Summary  from './views/Summary.jsx'
 import Board    from './views/Board.jsx'
 import Compare  from './views/Compare.jsx'
 import Report   from './views/Report.jsx'
+import Clients  from './views/Clients.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: 'board',       element: <Board />   },
       { path: 'compare',     element: <Compare /> },
       { path: 'manager/:id', element: <Report />  },
+      { path: 'clients',     element: <Clients /> },
     ],
   },
 ])

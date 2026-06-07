@@ -20,9 +20,10 @@ export default function App() {
 }
 
 function TopBar() {
-  const { ws, company, session, switchCompany, switchSession, addCompany, addRound, addBlankSession, exportBackup, exportCSV, onPrint, fileInputRef } = useApp()
+  const { ws, company, session, isSuperAdmin, switchCompany, switchSession, addCompany, addRound, addBlankSession, exportBackup, exportCSV, onPrint, fileInputRef } = useApp()
 
   const nav = [
+    ...(isSuperAdmin ? [{ to: '/clients', label: 'Clients' }] : []),
     { to: '/setup',   label: 'Setup'          },
     { to: '/assess',  label: 'Assess'         },
     { to: '/summary', label: 'Master Summary' },

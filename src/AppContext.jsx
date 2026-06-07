@@ -38,6 +38,7 @@ export function AppProvider({ children }) {
   const [loading, setLoading]           = useState(true)
   const [ws, setWs]                     = useState(null)
   const [userId, setUserId]             = useState(null)
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false)
   const [activeAssessor, setActiveAssessor] = useState(null)
   const [saveError, setSaveError]       = useState(null)
   const fileInput  = useRef(null)
@@ -53,6 +54,10 @@ export function AppProvider({ children }) {
     try {
       const { data: { user } } = await supabase.auth.getUser()
       setUserId(user.id)
+
+      // Load profile to check super admin status
+      const { data: profile } = await supabase.from('profiles').select('global_role').eq('id', user.id).single()
+      setIsSuperAdmin(profile?.global_role === 'super_admin')
 
       // Companies accessible to this user (RLS handles filtering)
       const { data: companies, error: cErr } = await supabase
@@ -396,7 +401,7 @@ export function AppProvider({ children }) {
 
   return (
     <Ctx.Provider value={{
-      ws, company, session, sessionView, activeAssessor, setActiveAssessor, userId,
+      ws, company, session, sessionView, activeAssessor, setActiveAssessor, userId, isSuperAdmin,
       updateWs, updateSession, updateCompany, setRecord,
       switchCompany, switchSession,
       addCompany, addRound, addBlankSession,
